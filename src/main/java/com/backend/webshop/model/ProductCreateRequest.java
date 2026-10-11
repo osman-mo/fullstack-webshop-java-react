@@ -1,13 +1,16 @@
 package com.backend.webshop.model;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import java.util.List;
 
 public class ProductCreateRequest {
 
-    private final String name;
+    @NotBlank private final String name;
     private final String description;
-    private final Integer priceInCent;
-    private final List<String> tags;
+    @NotNull @Positive private final Integer priceInCent;
+    @NotNull private final List<String> tags;
 
     public ProductCreateRequest(
             String name,
@@ -15,9 +18,9 @@ public class ProductCreateRequest {
             Integer priceInCent,
             List<String> tags) {
         this.name = name;
-        this.description = description;
+        this.description = description == null ? "" : description;
         this.priceInCent = priceInCent;
-        this.tags = tags;
+        this.tags = tags == null ? List.of() : List.copyOf(tags);
     }
 
 

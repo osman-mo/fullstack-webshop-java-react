@@ -3,6 +3,7 @@ package com.backend.webshop.controller;
 import com.backend.webshop.model.ProductCreateRequest;
 import com.backend.webshop.model.ProductResponse;
 import com.backend.webshop.repositories.ProductRepository;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,14 +35,14 @@ public class ProductController {
     }
 
     @DeleteMapping("/products/{id}")
-    public ResponseEntity deleteProduct(@PathVariable String id){
+    public ResponseEntity<Void> deleteProduct(@PathVariable String id){
         productRepository.deleteById(id);
         return ResponseEntity.noContent().build();
     }
 
 
     @PostMapping("/products")
-    public ProductResponse createProduct(@RequestBody ProductCreateRequest request){
+    public ProductResponse createProduct(@Valid @RequestBody ProductCreateRequest request){
         return productRepository.save(request);
     }
 }
